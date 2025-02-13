@@ -2,6 +2,16 @@
 
 ## What is it?
 
+A Software Bill of Materials (SBOM) is a detailed inventory of all components that make up a software application, including open-source libraries, proprietary code, dependencies, and version numbers. It is essentially a "bill of materials" (like in manufacturing) but for software, providing transparency into what’s inside an application.
+
+The key components of an SBOM are:
+1. _Component Name_ – Name of each software package or library.
+2. _Version Information_ – Specific version of each component.
+3. _Supplier Information_ – Who developed or provided the component.
+4. _License Details_ – Open-source or proprietary licensing terms.
+5. _Dependencies_ – Other software components that a package relies on.
+6. _Security Vulnerabilities_ – Known risks associated with components (if available).
+
 ## Why do we need them?
 
 Software Bill of Materials (SBOMs) play a crucial role in [DORA (Digital Operational Resilience Act)](DORA.md) compliance by improving transparency, security, and risk management in financial institutions' software supply chains.
@@ -52,3 +62,36 @@ SBOMs...
 - ... enhance cybersecurity posture and reduce risks from software vulnerabilities.
 - ... enable faster response to incidents and regulatory inquiries.
 - ... can be integrated into financial institutions' ICT risk management frameworks to streamline DORA compliance.
+
+## How to implement SBOMs?
+
+Implementing an SBOM effectively requires choosing the right tools, integrating it into your development workflow, and ensuring ongoing security monitoring. Here’s how to do it:
+1. Choose the right SBOM format
+2. Use automated SBOM generation tools
+3. Integrate SBOM into DevSecOps
+4. Manage 3rd-party and open-source risks
+5. Ensure regulatory compliance (DORA, NIS2, ...)
+
+### Choose the right SBOM format
+
+There are three widely accepted formats for SBOMs:
+
+| Feature               | CycloneDX                                                | SPDX (System Package Data Exchange)                                                              | SWID Tags                                                             |
+|-----------------------|----------------------------------------------------------|--------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| Notes                 | recommended                                              |                                                                                                  | not a full-fledged SBOM format                                        |
+| Primary focus         | application security, dependency management              | license compliance, intellectual property tracking                                               | software asset management, inventory tracking                         |
+| Developed by          | OWASP (open-source)                                      | Linux Foundation (open-source), now [ISO/IEC 5962:2021](https://www.iso.org/standard/81870.html) | [ISO/IEC 19770-2:2015](https://www.iso.org/standard/65666.html)       |
+| Use Case              | software supply chain security, vulnerability management | license compliance, legal documentation, software provenance                                     | tracking installed software on devices and IT infrastructure          |
+| Best for              | DevSecOps, SBOM automation, security analysis            | open-source licensing, compliance audits, legal use cases                                        | enterprise software tracking, asset management, government compliance |
+| Data coverage         | vulnerabilities, component integrity, security risks     | licenses, copyrights, software origins                                                           | software installations, updates, patches, and ownership               |
+| Supported media types | JSON, XML, Protobuf                                      | data model based on RDF, but serializations for JSON, YAML, XML, ...                             | XML, JSON (SWIDJS), CBOR (IoT use cases)                              |
+| Documentation         | https://cyclonedx.org/docs/1.6/                          | https://spdx.github.io/spdx-spec/v3.0.1/                                                         | https://standards.iso.org/iso/19770/-2/2015/schema.xsd                |
+
+A financial institution may use ...
+- ... CycloneDX to track vulnerabilities in third-party software.
+- ... SPDX to ensure legal compliance with software licenses.
+- ... SWID to maintain an IT asset inventory for audits and updates.
+
+We can find more details in
+- [SBOM Standard Formats (German article)](https://scribesecurity.com/de/sbom/standard-formats/)
+- [Guidelines for SWID Tags (NIST)](https://csrc.nist.gov/pubs/ir/8060/final)
