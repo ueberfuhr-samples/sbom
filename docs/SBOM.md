@@ -22,35 +22,35 @@ While SBOMs are not mandated, they can significantly help organizations meet DOR
 
 Here’s how SBOMs help organizations meet DORA requirements.
 
-### Enhanced ICT Risk Management (DORA Article 5)
+### Enhanced ICT Risk Management
 
 SBOMs...
 - ... provide detailed visibility into all software components, including open-source and third-party libraries.
 - ... identify vulnerabilities and outdated components that could pose cybersecurity risks.
 - ... support proactive risk assessments by tracking dependencies and potential security flaws.
 
-### Faster Incident Response & Recovery (DORA Article 11)
+### Faster Incident Response & Recovery
 
 SBOMs...
 - ... enable rapid identification of affected software during a cyberattack or security incident.
 - ... improve patch management by quickly finding and updating vulnerable components
 - ... reduce downtime and financial losses by facilitating a structured response.
 
-### Compliance with Resilience Testing (DORA Article 24)
+### Compliance with Resilience Testing
 
 SBOMs...
 - ... facilitate security audits and penetration testing by mapping software components.
 - ... help organizations simulate cyberattack scenarios and test system resilience.
 - ... ensure continuous monitoring of software supply chain risks.
 
-### Strengthening Third-Party Risk Management (DORA Article 28)
+### Strengthening Third-Party Risk Management
 
 SBOMs...
 - ... provide transparency into third-party software dependencies, reducing supply chain risks.
 - ... ensure ICT service providers comply with secure coding practices and vulnerability management.
 - ... help organizations enforce vendor security policies by requiring SBOMs from suppliers.
 
-### Supporting Regulatory Reporting & Documentation (DORA Article 19)
+### Supporting Regulatory Reporting & Documentation
 
 SBOMs...
 - ... serve as a detailed record of software components for regulatory audits.
@@ -63,14 +63,14 @@ SBOMs...
 - ... enable faster response to incidents and regulatory inquiries.
 - ... can be integrated into financial institutions' ICT risk management frameworks to streamline DORA compliance.
 
-## How to implement SBOMs?
+## How to implement them?
 
 Implementing an SBOM effectively requires choosing the right tools, integrating it into your development workflow, and ensuring ongoing security monitoring. Here’s how to do it:
 1. Choose the right SBOM format
 2. Use automated SBOM generation tools
-3. Integrate SBOM into DevSecOps
-4. Manage 3rd-party and open-source risks
-5. Ensure regulatory compliance (DORA, NIS2, ...)
+3. Integrate SBOM Generation into CI/CD Pipelines
+4. Use SBOMs for Security & Compliance
+5. Share and Distribute SBOMs Securely
 
 ### Choose the right SBOM format
 
@@ -95,3 +95,37 @@ A financial institution may use ...
 We can find more details in
 - [SBOM Standard Formats (German article)](https://scribesecurity.com/de/sbom/standard-formats/)
 - [Guidelines for SWID Tags (NIST)](https://csrc.nist.gov/pubs/ir/8060/final)
+
+### Use automated SBOM generation tools
+
+Use automated tools to generate SBOMs, such as:
+
+- Open Source Tools:
+  - [Syft (by Anchore)](https://github.com/anchore/syft)
+  - [SPDX tools](https://pypi.org/project/spdx-tools/)
+  - [CycloneDX CLI](https://github.com/CycloneDX/cyclonedx-cli)
+  - [OWASP Dependency-Track](https://dependencytrack.org/)
+- Integrated Solutions
+  - [Spring Boot](https://spring.io/blog/2024/05/24/sbom-support-in-spring-boot-3-3)
+  - [Quarkus](https://quarkus.io/guides/cyclonedx)
+  - [Docker Scout](https://docs.docker.com/scout/)
+- Commercial Solutions:
+  - [Snyk](https://docs.snyk.io/snyk-cli/commands/sbom)
+  - [JFrog Xray](https://jfrog.com/help/r/jfrog-security-documentation/xray-sbom-report)
+  - [Black Duck (Synopsys)](https://www.blackduck.com/blog/building-sbom-with-black-duck.html)
+  - [GitHub Dependency Graph](https://docs.github.com/en/rest/dependency-graph/sboms)
+
+### Integrate SBOM Generation into CI/CD Pipelines
+Automate SBOM creation at build time.
+- Use tools like GitHub Actions, GitLab CI, Jenkins, or Azure DevOps to ensure SBOMs are updated dynamically.
+- Store SBOMs in artifact repositories (e.g., JFrog Artifactory, Harbor). Storing them separately (not packaging them into the artifacts directly) allows easy retrieval without downloading the whole artifact.
+
+### Use SBOMs for Security & Compliance
+- Vulnerability Management: Compare SBOM data with vulnerability databases (e.g., NVD, OSV).
+- License Compliance: Ensure software adheres to open-source licensing policies.
+- Incident Response: Quickly identify affected components during security breaches.
+
+### Share and Distribute SBOMs Securely
+- Store SBOMs in a secure repository.
+- Share them using APIs or packaged in software artifacts.
+- Ensure cryptographic integrity using digital signatures.
