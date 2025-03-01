@@ -1,0 +1,6 @@
+version: '3.8'
+services:
+  app:
+    container_name: java-sbom-sample
+    image: java-sbom-sample:1.0.0
+    build: .
