@@ -79,6 +79,5 @@ docker scout cves \
   --output target/container-cves-sbom.json
 ```
 
-
 > [!NOTE]  
 > We can find details about the vulnerability databases [here](https://docs.docker.com/scout/deep-dive/advisory-db-sources/).
