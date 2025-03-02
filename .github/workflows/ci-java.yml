@@ -37,7 +37,7 @@ jobs:
         #             -s $GITHUB_WORKSPACE/settings.xml \
         run: |
           mvn -B deploy:deploy \
-            -DaltDeploymentRepository=github:https://maven.pkg.github.com/ueberfuhr-samples/sbom
+            -DaltDeploymentRepository=github::https://maven.pkg.github.com/ueberfuhr-samples/sbom
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Retrieve project groupId from POM
