@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  app:
+    container_name: quarkus-sbom-sample
+    image: quarkus-sbom-sample:1.0.0
+    build: .
+    ports:
+      - "8080:8080"
+      - "9000:9000"
