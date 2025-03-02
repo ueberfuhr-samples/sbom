@@ -3,4 +3,6 @@
 **/target
 !**/.gitignore
 !.editorconfig
+!.github
 !**/.dockerignore
+**/dependency-reduced-pom.xml
