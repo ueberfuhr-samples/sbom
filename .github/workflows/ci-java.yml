@@ -97,9 +97,6 @@ jobs:
     needs:
       - build-app
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: java-sbom-sample
     steps:
       - name: Restore SBOM
         uses: actions/download-artifact@v4
@@ -136,8 +133,8 @@ jobs:
       - name: Build Container
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: Dockerfile
+          context: 'java-sbom-sample'
+          file: 'java-sbom-sample/Dockerfile'
           tags: |
             ralfueberfuhr/java-sbom-sample:latest
             ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}
