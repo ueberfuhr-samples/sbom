@@ -75,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 'sbom'
-          path: 'target/sbom.json'
+          path: 'target/bom.json'
       - name: Upload App
         uses: actions/upload-artifact@v4
         with:
