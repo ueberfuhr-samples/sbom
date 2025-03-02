@@ -35,8 +35,11 @@ jobs:
       - name: Deploy App to GitHub Packages
         if: ${{ github.event_name != 'pull_request' }}
         #             -s $GITHUB_WORKSPACE/settings.xml \
+        # invoke jar:jar before deploy:deploy: https://stackoverflow.com/questions/6308162/maven-the-packaging-for-this-project-did-not-assign-a-file-to-the-build-artifac
         run: |
-          mvn -B deploy:deploy \
+          mvn -B \
+            jar:jar \
+            deploy:deploy \
             -DaltDeploymentRepository=github::https://maven.pkg.github.com/ueberfuhr-samples/sbom
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
