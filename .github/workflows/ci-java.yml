@@ -34,12 +34,12 @@ jobs:
         run: mvn -B package org.cyclonedx:cyclonedx-maven-plugin:2.9.1:makeBom
       - name: Deploy App to GitHub Packages
         if: ${{ github.event_name != 'pull_request' }}
-        #             -s $GITHUB_WORKSPACE/settings.xml \
         # invoke jar:jar before deploy:deploy: https://stackoverflow.com/questions/6308162/maven-the-packaging-for-this-project-did-not-assign-a-file-to-the-build-artifac
         run: |
           mvn -B \
             jar:jar \
             deploy:deploy \
+            -s $GITHUB_WORKSPACE/settings.xml
             -DaltDeploymentRepository=github::https://maven.pkg.github.com/ueberfuhr-samples/sbom
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
