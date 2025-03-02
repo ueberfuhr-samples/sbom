@@ -66,8 +66,8 @@ jobs:
             -Durl=https://maven.pkg.github.com/ueberfuhr-samples/sbom \
             -DgroupId=${{ env.PROJECT_GROUPID }} \
             -DartifactId=${{ env.PROJECT_ARTIFACTID }} \
-            -Dversion=${{ env.PROJECT_VERSION }}
-            -Dclassifier=cyclonedx
+            -Dversion=${{ env.PROJECT_VERSION }} \
+            -Dclassifier=cyclonedx \
             -Dtype=json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
