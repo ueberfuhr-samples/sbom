@@ -18,13 +18,14 @@ permissions:
   contents: read
   packages: write # GitHub packages
 
+defaults:
+  run:
+    working-directory: 'java-sbom-sample'
+
 jobs:
 
   build-app:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: java-sbom-sample
     steps:
       - name: Checkout from SCM
         uses: actions/checkout@v4
@@ -75,22 +76,22 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 'sbom'
-          path: 'target/bom.json'
+          path: 'java-sbom-sample/target/bom.json'
       - name: Upload App
         uses: actions/upload-artifact@v4
         with:
           name: 'app'
-          path: 'target/app.jar'
+          path: 'java-sbom-sample/target/app.jar'
       - name: Upload POM
         uses: actions/upload-artifact@v4
         with:
           name: 'pom'
-          path: 'pom.xml'
+          path: 'java-sbom-sample/pom.xml'
       - name: Upload Container Configuration
         uses: actions/upload-artifact@v4
         with:
           name: 'container'
-          path: 'Dockerfile'
+          path: 'java-sbom-sample/Dockerfile'
 
   build-container:
     needs:
@@ -104,20 +105,22 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: 'sbom'
-          path: 'target'
+          path: 'java-sbom-sample/target'
       - name: Restore App
         uses: actions/download-artifact@v4
         with:
           name: 'app'
-          path: 'target'
+          path: 'java-sbom-sample/target'
       - name: Restore POM
         uses: actions/download-artifact@v4
         with:
           name: 'pom'
+          path: 'java-sbom-sample'
       - name: Restore Container Configuration
         uses: actions/download-artifact@v4
         with:
           name: 'container'
+          path: 'java-sbom-sample'
       # (optionally) https://github.com/docker/buildx
       # (optionally) https://github.com/docker/metadata-action
       - name: Login to Docker Hub
