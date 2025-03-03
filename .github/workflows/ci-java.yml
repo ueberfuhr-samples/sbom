@@ -147,6 +147,7 @@ jobs:
             repository=${{ github.repositoryUrl }}
           sbom: ${{ github.event_name != 'pull_request' }}
           push: ${{ github.event_name != 'pull_request' }}
+          load: true # load to local Docker daemon to find it in the next step
       - name: Check vulnerabilities
         uses: docker/scout-action@v1
         with:
