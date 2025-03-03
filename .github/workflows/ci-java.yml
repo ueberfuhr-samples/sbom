@@ -135,6 +135,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           sbom: true
+          provenance: false
           context: 'java-sbom-sample'
           file: 'java-sbom-sample/Dockerfile'
           tags: |
