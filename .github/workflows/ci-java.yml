@@ -133,6 +133,8 @@ jobs:
         run: echo 'Project version is ${{ env.PROJECT_VERSION }}'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/amd64,linux/arm64
       - name: Build Container incl. SBOM
         uses: docker/build-push-action@v6
         with:
