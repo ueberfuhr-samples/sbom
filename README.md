@@ -17,7 +17,10 @@ find some [documentation](docs/README.md).
 
 ## See the Results
 
-You could also download the generated artifacts directly.
+We can create a pull request in this repository, which will lead to autmatically running pipelines.
+This includes creating a container image with SBOM and get vulnerabilities directly printed to the PR's comments.
+
+We could also download the generated artifacts directly.
 
 ### Download the application SBOM from GitHub Packages
 
@@ -39,13 +42,13 @@ We put the access token into our local Maven installation's `settings.xml` file 
       <!-- The id is referenced from the command line invocation below -->
       <id>github</id>
       <username>{YOUR-GITHUB-USERNAME}</username>
-      <password>{YOUR-GITHHUB-ACCESSTOKEN}</password>
+      <password>{YOUR-GITHUB-ACCESSTOKEN}</password>
     </server>
   </servers>
 </settings>
 ```
 
-Then, we could download the SBOM with this command:
+Then, we can download the SBOM with this command:
 
 ```bash
 # Download the latest SBOM for the Simple Java Project into the current working directory
@@ -62,7 +65,17 @@ mvn dependency:get \
 
 ### Pull the container image from DockerHub
 
-You could also create an SBOM from the container image that was pushed to DockerHub:
+The container image created by GitHub actions
+has [provenance attestations](https://docs.docker.com/build/metadata/attestations/slsa-provenance/), which we could
+print to the console using
+
+```bash
+docker buildx imagetools inspect ralfueberfuhr/java-sbom-sample
+# for Spring Boot: ralfueberfuhr/spring-sbom-sample
+# for Quarkus:     ralfueberfuhr/quarkus-sbom-sample
+```
+
+We can also create an SBOM from the container image that was pushed to DockerHub:
 
 ```bash
 docker scout sbom \
@@ -78,6 +91,4 @@ docker scout cves \
 
 # for Spring Boot: ralfueberfuhr/spring-sbom-sample
 # for Quarkus:     ralfueberfuhr/quarkus-sbom-sample
-
-
 ```
