@@ -149,7 +149,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: ralfueberfuhr/java-sbom-sample:latest
+          image: local://ralfueberfuhr/java-sbom-sample:latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Write Summary
         run: echo "Successfully built container image 'ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}'" >> $GITHUB_STEP_SUMMARY
