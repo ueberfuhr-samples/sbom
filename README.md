@@ -53,7 +53,7 @@ mvn dependency:get \
   -Dmaven.repo.local=./local-repo \
   -DremoteRepositories=github::::https://maven.pkg.github.com/ueberfuhr-samples/sbom/ \
   -Dartifact=com.samples.sbom:java-sbom-sample:LATEST:json:cyclonedx \
-  && cp ./local-repo/com/samples/sbom/java-sbom-sample/**/*-cyclonedx.json . \
+  && cp ./local-repo/com/samples/sbom/**/*-cyclonedx.json . \
   && rm -r ./local-repo
    
 # for Spring Boot: -Dartifact=com.samples.sbom:spring-sbom-sample:LATEST:json:cyclonedx
