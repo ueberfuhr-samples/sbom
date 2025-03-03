@@ -18,6 +18,7 @@ on:
 permissions:
   contents: read
   packages: write # GitHub packages
+  pull-requests: write
 
 defaults:
   run:
@@ -122,18 +123,32 @@ jobs:
       # (optionally) https://github.com/docker/buildx
       # (optionally) https://github.com/docker/metadata-action
       - name: Login to Docker Hub
-        if: github.event_name != 'pull_request'
+        # we need it for Docker Scout!
+        # if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Retrieve project version from POM
         run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-      - name: Show extracted Maven project version
-        run: echo 'Project version is ${{ env.PROJECT_VERSION }}'
-      - name: Build Container
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Container incl. SBOM (PR)
+        if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@v6
         with:
+          context: 'spring-sbom-sample'
+          file: 'spring-sbom-sample/Dockerfile'
+          tags: |
+            ralfueberfuhr/spring-sbom-sample:${{ env.PROJECT_VERSION }}-${{ github.run_id }}
+          push: false
+          load: true # load to local Docker daemon to find it in the next step - in conflict with "platforms"
+      - name: Build Container incl. SBOM (main)
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64,linux/arm64/v8 # in conflict to "load"
+          provenance: mode=max
           context: 'spring-sbom-sample'
           file: 'spring-sbom-sample/Dockerfile'
           tags: |
@@ -141,6 +156,21 @@ jobs:
             ralfueberfuhr/spring-sbom-sample:${{ env.PROJECT_VERSION }}
           labels: |
             repository=${{ github.repositoryUrl }}
-          push: ${{ github.event_name != 'pull_request' }}
+          sbom: true
+          push: true
+      - name: Check vulnerabilities (PR)
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: ralfueberfuhr/spring-sbom-sample:${{ env.PROJECT_VERSION }}-${{ github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check vulnerabilities (main)
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/scout-action@v1
+        with:
+          command: cves
+          image: ralfueberfuhr/spring-sbom-sample:latest
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Write Summary
         run: echo "Successfully built container image 'ralfueberfuhr/spring-sbom-sample:${{ env.PROJECT_VERSION }}'" >> $GITHUB_STEP_SUMMARY
