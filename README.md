@@ -1,5 +1,9 @@
 # SBOM Samples
 
+[![CI Build (Java Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-java.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-java.yml)
+[![CI Build (Spring Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-spring.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-spring.yml)
+[![CI Build (Quarkus Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-quarkus.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-quarkus.yml)
+
 ## See the Code
 
 This repository contains samples for

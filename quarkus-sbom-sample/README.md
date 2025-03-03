@@ -1,5 +1,7 @@
 # Quarkus SBOM Sample
 
+[![CI Build (Quarkus Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-quarkus.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-quarkus.yml)
+
 ## Application SBOM
 
 Quarkus provides a [specific tooling for SBOMs](https://quarkus.io/guides/cyclonedx) , because it enhances dependency management tools like Maven or Gradle by its own dependency resolver. So, the default resolving mechanism of Maven or Gradle is not sufficient to generate a complete SBOM.

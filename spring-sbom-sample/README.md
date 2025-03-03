@@ -1,5 +1,7 @@
 # Spring SBOM Sample
 
+[![CI Build (Spring Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-spring.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-spring.yml)
+
 ## Application SBOM
 
 Spring Boot [directly supports SBOM generation](https://spring.io/blog/2024/05/24/sbom-support-in-spring-boot-3-3) since

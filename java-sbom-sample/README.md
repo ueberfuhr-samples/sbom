@@ -1,5 +1,7 @@
 # Simple Java Sample
 
+[![CI Build (Java Sample)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-java.yml/badge.svg)](https://github.com/ueberfuhr-samples/sbom/actions/workflows/ci-java.yml)
+
 This sample is a simple Maven project that builds a JAR.
 We have the choice between two alternatives to generate BOMs.
 
