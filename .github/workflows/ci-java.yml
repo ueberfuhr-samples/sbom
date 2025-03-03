@@ -18,6 +18,7 @@ on:
 permissions:
   contents: read
   packages: write # GitHub packages
+  pull-requests: write
 
 defaults:
   run:
