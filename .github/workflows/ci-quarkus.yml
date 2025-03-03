@@ -1,4 +1,4 @@
-name: CI Build (Java Sample)
+name: CI Build (Quarkus Sample)
 
 on:
   pull_request:
@@ -82,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 'app'
-          path: 'quarkus-sbom-sample/target/app.jar'
+          path: 'quarkus-sbom-sample/target/quarkus-app/**'
       - name: Upload POM
         uses: actions/upload-artifact@v4
         with:
@@ -108,7 +108,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: 'app'
-          path: 'quarkus-sbom-sample/target'
+          path: 'quarkus-sbom-sample/target/quarkus-app'
       - name: Restore POM
         uses: actions/download-artifact@v4
         with:

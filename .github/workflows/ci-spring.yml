@@ -1,4 +1,4 @@
-name: CI Build (Java Sample)
+name: CI Build (Spring Sample)
 
 on:
   pull_request:
