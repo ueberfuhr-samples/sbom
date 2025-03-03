@@ -132,27 +132,36 @@ jobs:
         run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Build Container incl. SBOM
+      - name: Build Container incl. SBOM (PR)
+        if: ${{ github.event_name == 'pull_request' }}
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm64/v8
+          context: 'java-sbom-sample'
+          file: 'java-sbom-sample/Dockerfile'
+          tags: |
+            ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}-${{ github.run_id }}
+          push: false
+          load: true # load to local Docker daemon to find it in the next step - in conflict with "platforms"
+      - name: Build Container incl. SBOM (main)
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: docker/build-push-action@v6
+        with:
+          platforms: linux/amd64,linux/arm64,linux/arm64/v8 # in conflict to "load"
           provenance: mode=max
           context: 'java-sbom-sample'
           file: 'java-sbom-sample/Dockerfile'
           tags: |
             ralfueberfuhr/java-sbom-sample:latest
             ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}
-            ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}-${{ github.run_id }}
           labels: |
             repository=${{ github.repositoryUrl }}
-          sbom: ${{ github.event_name != 'pull_request' }}
-          push: ${{ github.event_name != 'pull_request' }}
-          load: true # load to local Docker daemon to find it in the next step
+          sbom: true
+          push: true
       - name: Check vulnerabilities
         uses: docker/scout-action@v1
         with:
           command: cves
-          image: ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}-${{ github.run_id }}
+          image: ralfueberfuhr/java-sbom-sample:latest
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Write Summary
         run: echo "Successfully built container image 'ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}'" >> $GITHUB_STEP_SUMMARY
