@@ -17,8 +17,9 @@ find some [documentation](docs/README.md).
 
 ## See the Results
 
-We can create a pull request in this repository, which will lead to autmatically running pipelines.
+We can create a pull request in this repository, which will lead to automatically running pipelines.
 This includes creating a container image with SBOM and get vulnerabilities directly printed to the PR's comments.
+We can find a [sample PR](https://github.com/ueberfuhr-samples/sbom/pull/1) in this repository.
 
 We could also download the generated artifacts directly.
 
