@@ -131,11 +131,12 @@ jobs:
         run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
       - name: Show extracted Maven project version
         run: echo 'Project version is ${{ env.PROJECT_VERSION }}'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Build Container incl. SBOM
         uses: docker/build-push-action@v6
         with:
-          sbom: true
-          provenance: false
+          provenance: mode=max
           context: 'java-sbom-sample'
           file: 'java-sbom-sample/Dockerfile'
           tags: |
@@ -143,6 +144,7 @@ jobs:
             ralfueberfuhr/java-sbom-sample:${{ env.PROJECT_VERSION }}
           labels: |
             repository=${{ github.repositoryUrl }}
+          sbom: ${{ github.event_name != 'pull_request' }}
           push: ${{ github.event_name != 'pull_request' }}
       - name: Check vulnerabilities
         uses: docker/scout-action@v1
