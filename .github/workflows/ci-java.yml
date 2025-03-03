@@ -129,15 +129,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Retrieve project version from POM
         run: echo "PROJECT_VERSION=$(mvn org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-      - name: Show extracted Maven project version
-        run: echo 'Project version is ${{ env.PROJECT_VERSION }}'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
-        with:
-          platforms: linux/amd64,linux/arm64
       - name: Build Container incl. SBOM
         uses: docker/build-push-action@v6
         with:
+          platforms: linux/amd64,linux/arm64,linux/arm64/v8
           provenance: mode=max
           context: 'java-sbom-sample'
           file: 'java-sbom-sample/Dockerfile'
